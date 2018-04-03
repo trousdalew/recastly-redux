@@ -9,56 +9,38 @@ import changeVideoList from '../actions/videoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import store from '../store/store.js';
 import handleSearch from '../actions/search.js';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      videos: [],
-      currentVideo: null
-    };
   }
 
   componentDidMount() {
-    console.log('Handle search: ', handleSearch);
-    
-  }
-
-  handleVideoListEntryTitleClick(video) {
-    this.setState({currentVideo: video});
-  }
-
-  getYouTubeVideos(query) {
-    var options = {
-      key: this.props.API_KEY,
-      query: query
-    };
-
-    this.props.searchYouTube(options, (videos) =>
-      this.setState({
-        videos: videos,
-        currentVideo: videos[0]
-      })
-    );
+    this.props.handleSearchInputChange('Octopus jar');
   }
 
   render() {
     return (
       <div>
-        <Nav handleSearchInputChange={this.getYouTubeVideos.bind(this)}/>
+        <Nav />
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.currentVideo}/>
+            <VideoPlayer />
           </div>
           <div className="col-md-5">
-            <VideoList
-              handleVideoListEntryTitleClick={this.handleVideoListEntryTitleClick.bind(this)}
-              videos={this.state.videos}
-            />
+            <VideoList />
           </div>
         </div>
       </div>
     );
   }
 }
+
+var mapDispatchToProps = (dispatch) => {
+    return {
+      handleSearchInputChange: (query) => dispatch(handleSearch(query))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(App);
