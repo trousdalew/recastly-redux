@@ -8,6 +8,7 @@ import changeVideo from '../actions/currentVideo.js';
 import changeVideoList from '../actions/videoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import store from '../store/store.js';
+import handleSearch from '../actions/search.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getYouTubeVideos('react tutorials');
+    console.log('Handle search: ', handleSearch);
+    
   }
 
   handleVideoListEntryTitleClick(video) {
